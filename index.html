@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>World Share Ultra Pro</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f5f7fb;
+color:#111827;
+overflow-x:hidden;
+}
+
+body::-webkit-scrollbar{
+width:8px;
+}
+
+body::-webkit-scrollbar-thumb{
+background:#3b82f6;
+border-radius:20px;
+}
+
+/* Animated Background */
+
+.bg{
+position:fixed;
+width:100%;
+height:100vh;
+top:0;
+left:0;
+overflow:hidden;
+z-index:-1;
+background:linear-gradient(135deg,#ffffff,#eef4ff,#f7f9ff);
+}
+
+.bg span{
+position:absolute;
+display:block;
+border-radius:50%;
+background:rgba(59,130,246,0.08);
+backdrop-filter:blur(10px);
+animation:float 18s linear infinite;
+}
+
+.bg span:nth-child(1){
+width:300px;
+height:300px;
+top:5%;
+left:5%;
+}
+
+.bg span:nth-child(2){
+width:220px;
+height:220px;
+top:70%;
+left:70%;
+}
+
+.bg span:nth-child(3){
+width:180px;
+height:180px;
+top:40%;
+left:40%;
+}
+
+.bg span:nth-child(4){
+width:260px;
+height:260px;
+top:75%;
+left:10%;
+}
+
+@keyframes float{
+0%{
+transform:translateY(0px) rotate(0deg);
+}
+50%{
+transform:translateY(-40px) rotate(180deg);
+}
+100%{
+transform:translateY(0px) rotate(360deg);
+}
+}
+
+/* Loader */
+
+.loader{
+position:fixed;
+width:100%;
+height:100vh;
+background:white;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:999999;
+transition:1s;
+}
+
+.loader.hidden{
+opacity:0;
+visibility:hidden;
+}
+
+.loader-circle{
+width:90px;
+height:90px;
+border:8px solid #dbeafe;
+border-top:8px solid #2563eb;
+border-radius:50%;
+animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+100%{
+transform:rotate(360deg);
+}
+}
+
+/* Navbar */
+
+nav{
+position:sticky;
+top:0;
+width:100%;
+z-index:999;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 50px;
+background:rgba(255,255,255,0.75);
+backdrop-filter:blur(20px);
+border-bottom:1px solid rgba(0,0,0,0.08);
+box-shadow:0 10px 30px rgba(0,0,0,0.05);
+}
+
+.logo{
+font-size:38px;
+font-weight:800;
+background:linear-gradient(to right,#2563eb,#7c3aed,#ec4899);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.nav-right{
+display:flex;
+align-items:center;
+gap:20px;
+}
+
+.search-box{
+position:relative;
+}
+
+.search-box input{
+padding:14px 20px 14px 50px;
+width:260px;
+border:none;
+border-radius:50px;
+background:#eef2ff;
+outline:none;
+font-size:15px;
+}
+
+.search-box i{
+position:absolute;
+left:18px;
+top:15px;
+color:#64748b;
+}
+
+.nav-icons{
+display:flex;
+gap:15px;
+}
+
+.nav-icons div{
+width:50px;
+height:50px;
+border-radius:50%;
+background:white;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+cursor:pointer;
+transition:0.4s;
+}
+
+.nav-icons div:hover{
+transform:translateY(-5px) scale(1.05);
+background:#2563eb;
+color:white;
+}
+
+/* Hero */
+
+.hero{
+padding:120px 20px 60px;
+text-align:center;
+animation:fadeUp 1s ease;
+}
+
+.hero h1{
+font-size:82px;
+font-weight:800;
+margin-bottom:20px;
+line-height:1.1;
+}
+
+.hero span{
+background:linear-gradient(to right,#2563eb,#7c3aed,#ec4899);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.hero p{
+max-width:900px;
+margin:auto;
+font-size:22px;
+line-height:1.9;
+color:#475569;
+}
+
+.hero-buttons{
+margin-top:40px;
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.hero-buttons button{
+padding:18px 35px;
+border:none;
+border-radius:60px;
+font-size:17px;
+font-weight:600;
+cursor:pointer;
+transition:0.4s;
+}
+
+.primary-btn{
+background:linear-gradient(to right,#2563eb,#7c3aed);
+color:white;
+box-shadow:0 20px 40px rgba(37,99,235,0.3);
+}
+
+.secondary-btn{
+background:white;
+box-shadow:0 20px 40px rgba(0,0,0,0.08);
+}
+
+.hero-buttons button:hover{
+transform:translateY(-8px) scale(1.03);
+}
+
+@keyframes fadeUp{
+from{
+opacity:0;
+transform:translateY(40px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+/* Create Box */
+
+.create-post{
+max-width:900px;
+margin:50px auto;
+padding:35px;
+background:rgba(255,255,255,0.9);
+border-radius:35px;
+backdrop-filter:blur(20px);
+box-shadow:0 20px 50px rgba(0,0,0,0.08);
+animation:fadeUp 1s ease;
+}
+
+.create-post h2{
+font-size:36px;
+margin-bottom:25px;
+}
+
+.create-post input,
+.create-post textarea{
+width:100%;
+padding:18px;
+margin-bottom:18px;
+border:none;
+border-radius:20px;
+background:#f1f5f9;
+font-size:16px;
+outline:none;
+transition:0.3s;
+}
+
+.create-post input:focus,
+.create-post textarea:focus{
+background:white;
+box-shadow:0 0 0 3px rgba(37,99,235,0.15);
+}
+
+.create-post textarea{
+height:140px;
+resize:none;
+}
+
+.create-buttons{
+display:flex;
+gap:18px;
+flex-wrap:wrap;
+}
+
+.create-buttons button{
+padding:16px 28px;
+border:none;
+border-radius:18px;
+font-size:16px;
+font-weight:700;
+color:white;
+cursor:pointer;
+transition:0.4s;
+box-shadow:0 15px 30px rgba(0,0,0,0.12);
+}
+
+.post-btn{
+background:linear-gradient(to right,#2563eb,#3b82f6);
+}
+
+.story-btn{
+background:linear-gradient(to right,#7c3aed,#8b5cf6);
+}
+
+.video-btn{
+background:linear-gradient(to right,#ef4444,#f97316);
+}
+
+.create-buttons button:hover{
+transform:translateY(-8px) scale(1.03);
+}
+
+/* Stories */
+
+.story-wrapper{
+display:flex;
+gap:25px;
+overflow-x:auto;
+padding:20px 30px 40px;
+}
+
+.story{
+min-width:220px;
+height:380px;
+border-radius:30px;
+overflow:hidden;
+position:relative;
+box-shadow:0 20px 40px rgba(0,0,0,0.15);
+transition:0.5s;
+}
+
+.story:hover{
+transform:translateY(-12px) scale(1.03);
+}
+
+.story img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.story::after{
+content:'';
+position:absolute;
+left:0;
+bottom:0;
+width:100%;
+height:50%;
+background:linear-gradient(transparent,rgba(0,0,0,0.85));
+}
+
+.story h3{
+position:absolute;
+bottom:25px;
+left:20px;
+font-size:25px;
+color:white;
+z-index:2;
+}
+
+/* Feed */
+
+.feed{
+max-width:900px;
+margin:auto;
+padding:20px;
+}
+
+.post{
+background:rgba(255,255,255,0.95);
+padding:30px;
+border-radius:35px;
+margin-bottom:35px;
+box-shadow:0 20px 50px rgba(0,0,0,0.08);
+transition:0.5s;
+animation:fadeUp 0.8s ease;
+}
+
+.post:hover{
+transform:translateY(-8px);
+}
+
+.post-header{
+display:flex;
+align-items:center;
+gap:15px;
+margin-bottom:20px;
+}
+
+.post-header img{
+width:70px;
+height:70px;
+border-radius:50%;
+object-fit:cover;
+border:4px solid #3b82f6;
+}
+
+.post-header h3{
+font-size:24px;
+}
+
+.post-header span{
+color:#64748b;
+}
+
+.post p{
+line-height:1.9;
+font-size:17px;
+margin-bottom:20px;
+color:#334155;
+}
+
+.post-image,
+.post video{
+width:100%;
+border-radius:25px;
+margin-bottom:20px;
+}
+
+.actions{
+display:flex;
+justify-content:space-around;
+padding-top:18px;
+border-top:1px solid rgba(0,0,0,0.08);
+}
+
+.actions button{
+background:#eff6ff;
+border:none;
+padding:14px 22px;
+border-radius:15px;
+font-size:17px;
+font-weight:600;
+color:#1e293b;
+cursor:pointer;
+transition:0.4s;
+}
+
+.actions button:hover{
+background:#2563eb;
+color:white;
+transform:translateY(-5px);
+}
+
+.comment-box{
+margin-top:20px;
+}
+
+.comment-box input{
+width:100%;
+padding:16px;
+border:none;
+border-radius:18px;
+background:#f1f5f9;
+outline:none;
+font-size:15px;
+}
+
+.comment{
+padding:14px;
+background:#f8fafc;
+border-radius:16px;
+margin-top:12px;
+}
+
+/* Popup */
+
+.popup{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(0);
+width:90%;
+max-width:420px;
+padding:40px;
+background:white;
+border-radius:35px;
+z-index:99999;
+box-shadow:0 30px 80px rgba(0,0,0,0.2);
+transition:0.5s;
+}
+
+.popup.active{
+transform:translate(-50%,-50%) scale(1);
+}
+
+.popup h2{
+font-size:35px;
+margin-bottom:20px;
+text-align:center;
+}
+
+.popup p{
+color:#64748b;
+text-align:center;
+line-height:1.8;
+}
+
+.popup button{
+margin-top:25px;
+width:100%;
+padding:16px;
+border:none;
+border-radius:18px;
+background:linear-gradient(to right,#2563eb,#7c3aed);
+color:white;
+font-size:17px;
+font-weight:700;
+cursor:pointer;
+}
+
+/* Footer */
+
+footer{
+margin-top:100px;
+padding:80px 20px 40px;
+text-align:center;
+background:white;
+box-shadow:0 -10px 40px rgba(0,0,0,0.06);
+}
+
+footer h2{
+font-size:50px;
+margin-bottom:20px;
+background:linear-gradient(to right,#2563eb,#7c3aed,#ec4899);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+footer p{
+max-width:900px;
+margin:auto;
+line-height:2;
+color:#475569;
+font-size:18px;
+}
+
+.footer-links{
+margin-top:35px;
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.footer-links a{
+text-decoration:none;
+padding:14px 22px;
+border-radius:50px;
+background:#eff6ff;
+color:#1e293b;
+font-weight:600;
+transition:0.4s;
+}
+
+.footer-links a:hover{
+background:#2563eb;
+color:white;
+transform:translateY(-5px);
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+.hero h1{
+font-size:52px;
+}
+
+nav{
+padding:15px 20px;
+flex-direction:column;
+gap:20px;
+}
+
+.search-box input{
+width:100%;
+}
+
+.create-buttons{
+flex-direction:column;
+}
+
+.create-buttons button{
+width:100%;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<!-- Loader -->
+
+<div class="loader" id="loader">
+<div class="loader-circle"></div>
+</div>
+
+<!-- Animated Background -->
+
+<div class="bg">
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+</div>
+
+<!-- Navbar -->
+
+<nav>
+<div class="logo">World Share</div>
+
+<div class="nav-right">
+
+<div class="search-box">
+<i class="fa-solid fa-magnifying-glass"></i>
+<input type="text" placeholder="Search users, posts, videos...">
+</div>
+
+<div class="nav-icons">
+<div><i class="fa-solid fa-house"></i></div>
+<div><i class="fa-solid fa-heart"></i></div>
+<div><i class="fa-solid fa-bell"></i></div>
+<div><i class="fa-solid fa-user"></i></div>
+</div>
+
+</div>
+</nav>
+
+<!-- Hero -->
+
+<section class="hero">
+<h1>Ultra Hyper <span>Professional</span><br>Social Media</h1>
+
+<p>
+World Share is a futuristic premium social platform where users can upload posts, videos and stories with ultra smooth animations, modern UI and professional design.
+</p>
+
+<div class="hero-buttons">
+<button class="primary-btn" onclick="showPopup()">Explore Platform</button>
+<button class="secondary-btn">Watch Demo</button>
+</div>
+</section>
+
+<!-- Create Post -->
+
+<section class="create-post">
+
+<h2>Create Amazing Content</h2>
+
+<input type="text" id="username" placeholder="Your Name">
+
+<textarea id="caption" placeholder="Share something amazing..."></textarea>
+
+<input type="file" id="fileInput" accept="image/*,video/*">
+
+<div class="create-buttons">
+<button class="post-btn" onclick="createPost()"><i class="fa-solid fa-image"></i> Create Post</button>
+<button class="story-btn" onclick="createStory()"><i class="fa-solid fa-camera"></i> Add Story</button>
+<button class="video-btn" onclick="createVideoPost()"><i class="fa-solid fa-video"></i> Upload Video</button>
+</div>
+
+</section>
+
+<!-- Stories -->
+
+<div class="story-wrapper" id="storyWrapper">
+
+<div class="story">
+<img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1200&auto=format&fit=crop">
+<h3>Travel</h3>
+</div>
+
+<div class="story">
+<img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1200&auto=format&fit=crop">
+<h3>Lifestyle</h3>
+</div>
+
+<div class="story">
+<img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1200&auto=format&fit=crop">
+<h3>Fashion</h3>
+</div>
+
+</div>
+
+<!-- Feed -->
+
+<section class="feed" id="feed">
+
+<div class="post">
+
+<div class="post-header">
+<img src="https://randomuser.me/api/portraits/men/32.jpg">
+<div>
+<h3>Alex Carter</h3>
+<span>2 Hours Ago</span>
+</div>
+</div>
+
+<p>
+Welcome to the ultra professional World Share platform 🚀
+</p>
+
+<img class="post-image" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1400&auto=format&fit=crop">
+
+<div class="actions">
+<button onclick="likePost(this)"><i class="fa-solid fa-heart"></i> <span>0</span></button>
+<button onclick="sharePost()"><i class="fa-solid fa-share"></i> Share</button>
+</div>
+
+<div class="comment-box">
+<input type="text" placeholder="Write a comment..." onkeypress="addComment(event,this)">
+<div class="comments"></div>
+</div>
+
+</div>
+
+</section>
+
+<!-- Popup -->
+
+<div class="popup" id="popup">
+<h2>Welcome To World Share</h2>
+<p>
+Experience futuristic social media with professional animations, premium design and ultra smooth interaction.
+</p>
+<button onclick="closePopup()">Continue</button>
+</div>
+
+<!-- Footer -->
+
+<footer>
+<h2>World Share</h2>
+
+<p>
+World Share is an ultra modern social media website inspired by premium social platforms. Users can upload videos, images and stories with futuristic design and professional experience.
+</p>
+
+<div class="footer-links">
+<a href="https://www.wikipedia.org/" target="_blank">Wikipedia</a>
+<a href="https://www.bbc.com/" target="_blank">BBC</a>
+<a href="https://www.cnn.com/" target="_blank">CNN</a>
+<a href="https://www.forbes.com/" target="_blank">Forbes</a>
+<a href="https://techcrunch.com/" target="_blank">TechCrunch</a>
+</div>
+</footer>
+
+<script>
+
+let currentUser = "Guest User";
+
+const feed = document.getElementById('feed');
+const storyWrapper = document.getElementById('storyWrapper');
+const popup = document.getElementById('popup');
+
+/* Loader */
+
+window.onload = ()=>{
+setTimeout(()=>{
+document.getElementById('loader').classList.add('hidden');
+popup.classList.add('active');
+},1500);
+}
+
+/* Popup */
+
+function showPopup(){
+popup.classList.add('active');
+}
+
+function closePopup(){
+popup.classList.remove('active');
+}
+
+/* Save */
+
+function savePosts(){
+localStorage.setItem('worldshare_feed', feed.innerHTML);
+}
+
+function saveStories(){
+localStorage.setItem('worldshare_stories', storyWrapper.innerHTML);
+}
+
+/* Load */
+
+function loadPosts(){
+const savedFeed = localStorage.getItem('worldshare_feed');
+if(savedFeed){
+feed.innerHTML = savedFeed;
+}
+}
+
+function loadStories(){
+const savedStories = localStorage.getItem('worldshare_stories');
+if(savedStories){
+storyWrapper.innerHTML = savedStories;
+}
+}
+
+/* Create Post */
+
+function createPost(){
+
+const username = document.getElementById('username').value || currentUser;
+const caption = document.getElementById('caption').value;
+const file = document.getElementById('fileInput').files[0];
+
+if(caption === '' || !file){
+alert('Please complete all fields');
+return;
+}
+
+const imageUrl = URL.createObjectURL(file);
+
+const post = document.createElement('div');
+post.classList.add('post');
+
+post.innerHTML = `
+
+<div class="post-header">
+<img src="https://randomuser.me/api/portraits/lego/1.jpg">
+<div>
+<h3>${username}</h3>
+<span>Just Now</span>
+</div>
+</div>
+
+<p>${caption}</p>
+
+<img class="post-image" src="${imageUrl}">
+
+<div class="actions">
+<button onclick="likePost(this)"><i class="fa-solid fa-heart"></i> <span>0</span></button>
+<button onclick="sharePost()"><i class="fa-solid fa-share"></i> Share</button>
+</div>
+
+<div class="comment-box">
+<input type="text" placeholder="Write a comment..." onkeypress="addComment(event,this)">
+<div class="comments"></div>
+</div>
+
+`;
+
+feed.prepend(post);
+
+savePosts();
+
+alert('Post Uploaded Successfully');
+
+}
+
+/* Create Video */
+
+function createVideoPost(){
+
+const username = document.getElementById('username').value || currentUser;
+const caption = document.getElementById('caption').value;
+const file = document.getElementById('fileInput').files[0];
+
+if(caption === '' || !file){
+alert('Please complete all fields');
+return;
+}
+
+const videoUrl = URL.createObjectURL(file);
+
+const post = document.createElement('div');
+post.classList.add('post');
+
+post.innerHTML = `
+
+<div class="post-header">
+<img src="https://randomuser.me/api/portraits/lego/2.jpg">
+<div>
+<h3>${username}</h3>
+<span>Just Now</span>
+</div>
+</div>
+
+<p>${caption}</p>
+
+<video controls class="post-image">
+<source src="${videoUrl}" type="video/mp4">
+</video>
+
+<div class="actions">
+<button onclick="likePost(this)"><i class="fa-solid fa-heart"></i> <span>0</span></button>
+<button onclick="sharePost()"><i class="fa-solid fa-share"></i> Share</button>
+</div>
+
+<div class="comment-box">
+<input type="text" placeholder="Write a comment..." onkeypress="addComment(event,this)">
+<div class="comments"></div>
+</div>
+
+`;
+
+feed.prepend(post);
+
+savePosts();
+
+alert('Video Uploaded Successfully');
+
+}
+
+/* Story */
+
+function createStory(){
+
+const username = document.getElementById('username').value || currentUser;
+const file = document.getElementById('fileInput').files[0];
+
+if(!file){
+alert('Please select image');
+return;
+}
+
+const imageUrl = URL.createObjectURL(file);
+
+const story = document.createElement('div');
+story.classList.add('story');
+
+story.innerHTML = `
+<img src="${imageUrl}">
+<h3>${username}</h3>
+`;
+
+storyWrapper.prepend(story);
+
+saveStories();
+
+alert('Story Added Successfully');
+
+}
+
+/* Like */
+
+function likePost(button){
+
+const countSpan = button.querySelector('span');
+let count = parseInt(countSpan.innerText);
+
+if(button.classList.contains('liked')){
+count--;
+button.classList.remove('liked');
+button.style.background = '#eff6ff';
+button.style.color = '#111827';
+}
+
+else{
+count++;
+button.classList.add('liked');
+button.style.background = '#ef4444';
+button.style.color = 'white';
+}
+
+countSpan.innerText = count;
+
+savePosts();
+
+}
+
+/* Comments */
+
+function addComment(event,input){
+
+if(event.key === 'Enter'){
+
+const commentText = input.value;
+
+if(commentText.trim() === '') return;
+
+const commentsDiv = input.nextElementSibling;
+
+const comment = document.createElement('div');
+comment.classList.add('comment');
+
+comment.innerHTML = `💬 ${commentText}`;
+
+commentsDiv.appendChild(comment);
+
+input.value = '';
+
+savePosts();
+
+}
+
+}
+
+/* Share */
+
+function sharePost(){
+
+navigator.clipboard.writeText(window.location.href);
+
+alert('Post Link Copied Successfully');
+
+}
+
+loadPosts();
+loadStories();
+
+</script>
+
+</body>
+</html>
+
