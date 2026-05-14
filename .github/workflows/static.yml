@@ -1,43 +1,403 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>World Share v9 Final</title>
 
-on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: ["main"]
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+<style>
+body{
+margin:0;
+font-family:Poppins;
+background:#f4f6fb;
+}
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+/* HEADER */
+header{
+display:flex;
+justify-content:space-between;
+padding:12px;
+background:white;
+position:sticky;
+top:0;
+border-bottom:1px solid #eee;
+z-index:10;
+}
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+.logo{font-weight:800;color:#1877f2;}
 
-jobs:
-  # Single deploy job since we're just deploying
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          # Upload entire repository
-          path: '.'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
+/* CONTAINER */
+.container{max-width:700px;margin:auto;padding:10px;}
+
+/* CARD ANIMATION */
+.card{
+background:white;
+padding:12px;
+margin-top:10px;
+border-radius:14px;
+box-shadow:0 8px 20px rgba(0,0,0,0.05);
+animation:fadeIn .3s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(10px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+/* PROFILE */
+.profile{text-align:center;}
+.profile img{
+width:90px;height:90px;
+border-radius:50%;
+border:3px solid #1877f2;
+object-fit:cover;
+cursor:pointer;
+transition:.3s;
+}
+.profile img:hover{transform:scale(1.05);}
+
+/* INPUT */
+input,textarea{
+width:100%;
+padding:8px;
+margin-top:6px;
+border-radius:8px;
+border:1px solid #ddd;
+}
+
+/* BUTTON */
+button{
+padding:7px 10px;
+border:none;
+border-radius:8px;
+background:#1877f2;
+color:white;
+cursor:pointer;
+margin-top:5px;
+transition:.2s;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+.del{background:red;}
+.like{background:#ff2d55;}
+.share{background:#22c55e;}
+
+/* STORY */
+.storyBar{
+display:flex;
+gap:10px;
+overflow-x:auto;
+padding:10px;
+}
+
+.story{
+min-width:70px;
+height:70px;
+border-radius:50%;
+border:3px solid #ff2d55;
+overflow:hidden;
+animation:pop .3s;
+}
+
+@keyframes pop{
+from{transform:scale(.6);opacity:0;}
+to{transform:scale(1);opacity:1;}
+}
+
+.story img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* MEDIA */
+.post img, video{
+width:100%;
+border-radius:10px;
+margin-top:10px;
+animation:fadeIn .3s;
+}
+
+/* COMMENT */
+.comment{
+font-size:12px;
+background:#f1f1f1;
+padding:5px;
+margin-top:5px;
+border-radius:6px;
+}
+
+/* TOAST POPUP */
+#toast{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:#111;
+color:white;
+padding:10px 15px;
+border-radius:10px;
+opacity:0;
+transition:.4s;
+}
+
+/* CHAT */
+.chat{
+position:fixed;
+right:10px;
+bottom:10px;
+width:250px;
+background:white;
+border-radius:12px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+.chathead{
+background:#1877f2;
+color:white;
+padding:8px;
+}
+
+.chatbox{
+height:140px;
+overflow:auto;
+padding:5px;
+font-size:12px;
+}
+
+.chat input{
+width:100%;
+padding:6px;
+border:none;
+outline:none;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">🌍 World Share v9</div>
+<div id="uname"></div>
+</header>
+
+<!-- LOGIN -->
+<div id="login" style="
+position:fixed;inset:0;
+display:flex;align-items:center;justify-content:center;
+background:rgba(0,0,0,0.6);
+">
+<div class="card">
+<h3>Login</h3>
+<input id="u" placeholder="username">
+<button onclick="login()">Enter</button>
+</div>
+</div>
+
+<!-- APP -->
+<div id="app" style="display:none">
+
+<div class="container">
+
+<!-- PROFILE -->
+<div class="card profile">
+<img id="pp" src="https://i.pravatar.cc/100" onclick="filePP()">
+<h3 id="user"></h3>
+<input type="file" onchange="setPP(event)">
+</div>
+
+<!-- STORY -->
+<div class="card">
+<h3>Story Upload</h3>
+<input type="file" onchange="addStory(event)">
+<div class="storyBar" id="stories"></div>
+</div>
+
+<!-- POST -->
+<div class="card">
+<textarea id="txt" placeholder="Write something..."></textarea>
+<input type="file" onchange="setImg(event)">
+<input type="file" onchange="setVid(event)">
+<button onclick="post()">Post</button>
+</div>
+
+<!-- FEED -->
+<div id="feed"></div>
+
+</div>
+
+<!-- CHAT -->
+<div class="chat">
+<div class="chathead">Messenger</div>
+<div class="chatbox" id="chat"></div>
+<input id="msg" placeholder="msg..." onkeypress="if(event.key==='Enter') send()">
+</div>
+
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+
+let user="";
+let posts=[];
+let stories=[];
+
+let tempImg="";
+let tempVid="";
+
+/* TOAST */
+function toast(msg){
+let t=document.getElementById("toast");
+t.innerText=msg;
+t.style.opacity=1;
+setTimeout(()=>t.style.opacity=0,1500);
+}
+
+/* LOGIN */
+function login(){
+user=document.getElementById("u").value;
+if(!user)return;
+
+document.getElementById("login").style.display="none";
+document.getElementById("app").style.display="block";
+
+document.getElementById("user").innerText=user;
+document.getElementById("uname").innerText=user;
+
+toast("Welcome " + user);
+}
+
+/* FILE PROFILE */
+function filePP(){
+document.querySelector('input[type=file]').click();
+}
+
+function setPP(e){
+document.getElementById("pp").src = URL.createObjectURL(e.target.files[0]);
+toast("Profile Updated");
+}
+
+/* STORY */
+function addStory(e){
+let file=e.target.files[0];
+stories.unshift(URL.createObjectURL(file));
+renderStories();
+toast("Story Added");
+}
+
+function renderStories(){
+document.getElementById("stories").innerHTML=
+stories.map(s=>`
+<div class="story"><img src="${s}"></div>
+`).join("");
+}
+
+/* POST FILES */
+function setImg(e){
+tempImg=URL.createObjectURL(e.target.files[0]);
+toast("Image selected");
+}
+
+function setVid(e){
+tempVid=URL.createObjectURL(e.target.files[0]);
+toast("Video selected");
+}
+
+/* POST */
+function post(){
+let t=document.getElementById("txt").value;
+if(!t && !tempImg && !tempVid) return;
+
+posts.unshift({
+id:Date.now(),
+user,
+text:t,
+img:tempImg,
+vid:tempVid,
+likes:0,
+comments:[]
+});
+
+tempImg=""; tempVid="";
+document.getElementById("txt").value="";
+
+render();
+toast("Post uploaded");
+}
+
+/* LIKE */
+function like(id){
+posts.find(p=>p.id===id).likes++;
+render();
+}
+
+/* DELETE */
+function del(id){
+posts=posts.filter(p=>p.id!==id);
+render();
+toast("Post deleted");
+}
+
+/* COMMENT */
+function comment(id,val){
+posts.find(p=>p.id===id).comments.push({user,text:val});
+render();
+}
+
+/* SHARE */
+function share(){
+navigator.clipboard.writeText(location.href);
+toast("Link copied!");
+}
+
+/* RENDER */
+function render(){
+
+document.getElementById("feed").innerHTML=
+posts.map(p=>`
+<div class="card">
+
+<b>${p.user}</b>
+<p>${p.text}</p>
+
+${p.img?`<img src="${p.img}">`:""}
+${p.vid?`<video controls src="${p.vid}"></video>`:""}
+
+<button class="like" onclick="like(${p.id})">❤️ ${p.likes}</button>
+<button class="share" onclick="share()">Share</button>
+
+${p.user===user?`<button class="del" onclick="del(${p.id})">Delete</button>`:""}
+
+<input placeholder="comment..." 
+onkeypress="if(event.key==='Enter') comment(${p.id},this.value);this.value=''">
+
+${p.comments.map(c=>`
+<div class="comment"><b>${c.user}:</b> ${c.text}</div>
+`).join("")}
+
+</div>
+`).join("");
+}
+
+/* CHAT */
+function send(){
+let m=document.getElementById("msg");
+if(!m.value)return;
+
+let d=document.createElement("div");
+d.innerText=user+": "+m.value;
+
+document.getElementById("chat").appendChild(d);
+m.value="";
+}
+
+</script>
+
+</body>
+</html>5
